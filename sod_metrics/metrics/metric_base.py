@@ -1,7 +1,5 @@
 import numpy as np
 
-__version__ = '1.1.1'
-
 _EPS = 1e-16
 _TYPE = np.float64
 
