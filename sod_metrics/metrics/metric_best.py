@@ -62,20 +62,16 @@ class Emeasure(object):
         # demeaned_gt = gt - gt.mean()
         fg_fg_numel = np.count_nonzero(binarized_pred & gt)
         fg_bg_numel = np.count_nonzero(binarized_pred & ~gt)
+        pred_bg_numel = fg_fg_numel + fg_bg_numel
 
         # bg_fg_numel = np.count_nonzero(~binarized_pred & gt)
         bg_fg_numel = self.gt_fg_numel - fg_fg_numel
         # bg_bg_numel = np.count_nonzero(~binarized_pred & ~gt)
-        bg_bg_numel = self.gt_size - (fg_fg_numel + fg_bg_numel + bg_fg_numel)
+        bg_bg_numel = (self.gt_size - pred_bg_numel) - bg_fg_numel
 
-        parts_numel = [
-            fg_fg_numel,
-            fg_bg_numel,
-            bg_fg_numel,
-            bg_bg_numel
-        ]
+        parts_numel = [fg_fg_numel, fg_bg_numel, bg_fg_numel, bg_bg_numel]
 
-        mean_pred_value = (fg_fg_numel + fg_bg_numel) / self.gt_size
+        mean_pred_value = pred_bg_numel / self.gt_size
         mean_gt_value = self.gt_fg_numel / self.gt_size
 
         demeaned_pred_fg_value = 1 - mean_pred_value
