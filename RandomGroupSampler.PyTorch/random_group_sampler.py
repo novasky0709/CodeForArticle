@@ -67,16 +67,7 @@ loader = data.DataLoader(
     sampler=RandomGroupSampler(dataset, batch_size=2, generator=None),
 )
 
-for sample in loader:
-    print(sample)
-
-# tensor([8, 9])
-# tensor([4, 5])
-# tensor([14, 15])
-# tensor([16, 17])
-# tensor([10, 11])
-# tensor([6, 7])
-# tensor([2, 3])
-# tensor([18, 19])
-# tensor([12, 13])
-# tensor([0, 1])
+for epoch in range(3):
+    print(f"Epoch: {epoch}")
+    for batch in loader:
+        print(batch)
